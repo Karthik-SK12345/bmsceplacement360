@@ -1,0 +1,297 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;700&display=swap');
+
+* {
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+img {
+  max-width: 100%;
+  display: block;
+}
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.card::after,
+.card img {
+  border-radius: 50%;
+}
+.card,
+.stats {
+  display: flex;
+}
+
+.card {
+  padding: 2.5rem 2rem;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .5);
+  max-width: 500px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+  margin: 1rem;
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: hidden; background-color: #ADE5F9;
+}
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+.card::before {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  top: -.7rem;
+  left: -.7rem;
+}
+.card::after {
+  height: 15rem;
+  width: 15rem;
+  background-color: #4172f5aa;
+  top: -8rem;
+  right: -8rem;
+  box-shadow: 2rem 6rem 0 -3rem #FFF
+}
+
+.card img {
+  width: 8rem;
+  min-width: 80px;
+  box-shadow: 0 0 0 5px #FFF;
+  margin-left:1.5rem
+}
+
+.infos {
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+
+
+.text {
+  font-size: .9rem;
+  font-weight:bolder
+  margin-bottom: 1rem;
+}
+a,.btn{
+font-weight:bolder;
+}
+.stats {
+  margin-bottom: 1rem;
+}
+.stats li {
+  min-width: 5rem;
+}
+.stats li h3 {
+  font-size: .99rem;
+}
+.stats li h4 {
+  font-size: .75rem;
+}
+
+.links button {
+  font-family: 'Poppins', sans-serif;
+  min-width: 120px;
+  padding: .5rem;
+  border: 1px solid #222;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all .25s linear;
+}
+.links .follow,
+.links .view:hover {
+  background-color: #222;
+  color: #FFF;
+}
+.links .view,
+.links .follow:hover{
+  background-color: transparent;
+  color: #222;
+}
+
+@media screen and (max-width: 450px) {
+  .card {
+    display: block;
+  }
+  .infos {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+  .links button {
+    min-width: 100px;
+  }
+}
+body {
+ 
+  align-items: center;
+  justify-content: center;
+ 
+ 
+}
+.card-title{
+	font-weight:bolder
+}
+.linkdetails{
+	margin:0.5rem;
+	font-weight:bolder;
+	margin-left: 1rem;
+}
+h1.second {
+        font-weight: bolder;
+		color:black;
+		font-size:23px;
+		display:inline
+    }
+    #details
+	 {
+        font-weight: bolder;
+		color:#0088cc;
+		font-size:22px;
+		display:inline;
+
+    }
+    h1.second span {
+        position: relative;
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 10px;
+        border-bottom: 1px solid mediumseagreen;color:black
+    }
+    
+    h1.second span:after {
+        content: '';
+        position: absolute;
+        bottom: calc(-100% - 1px);
+        margin-left: -10px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+	}
+</style>
+<h1 class="second"><span>USER PROFILE </span></h1>
+<br/><br/>
+<div class="card">
+    <div class="img">
+      {% if page_user.profile_pic %}
+      <img src="{{ page_user.profile_pic.url }}" class="card-img">
+
+{% else %}
+	<img src="{% static 'theblog/images/default_profile_pic.jpg' %}" class="card-img">
+{% endif %}
+    </div>
+    <div class="infos">
+     <div class="name">
+           <h2 class="card-title">
+        	{{ page_user.user.first_name }} 
+			{{ page_user.user.last_name }}
+		</h2>
+      </div>
+      <p class="text" style="font-weight:bolder">
+	  <h2 class="card-title">
+        	{{ page_user.user.first_name }} 
+			{{ page_user.user.last_name }}
+		</h2>
+        <span style="font-weight:bolder;color:black">{{ page_user.bio }}</span>
+      </p>
+      
+     <div class="row">
+    <div class="linkdetails">
+      {% comment %} <a href="{% url 'show_profile_page' post.author.profile.id %}"><button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 100px;" OnClick="btnSearch_Click"  >Profile </button></a> {% endcomment %}
+	 	{% if page_user.website_url %}   
+         <a href="{{ page_user.website_url }}"><button id="btnClear" class="btn btn-primary btn-md center-block" Style="width: 100px;" OnClick="btnClear_Click" >Portfolio</button></a>
+		{% endif %}
+		{% if page_user.linkedin_url %}   
+         <a href="{{ page_user.linkedin_url }}"><button id="btnClear" class="btn btn-primary btn-md center-block" Style="width: 100px;" OnClick="btnClear_Click" >LinkedIn</button></a>
+		{% endif %} <br > <br >
+			{% if page_user.email %}   
+         Email Id - <a style="text-decoration:underline" href="mailto:{{ page_user.email }}">{{ page_user.email }}</a>
+		{% endif %}
+     </div>
+</div>
+    </div>
+  </div>
+
+
+{% comment %} <div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+{% if page_user.profile_pic %}
+      <img src="{{ page_user.profile_pic.url }}" class="card-img">
+
+{% else %}
+	<img src="{% static 'theblog/images/default_profile_pic.png' %}" class="card-img">
+{% endif %}
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title">
+        	{{ page_user.user.first_name }} 
+			{{ page_user.user.last_name }}
+		</h5>
+
+<p class="small text-muted">
+	
+	
+
+	{% if page_user.website_url %}
+		 <a href="{{ page_user.website_url }}">  Website</a>  
+	{% endif %}
+
+	
+	{% if page_user.email %}
+		 | <a href="{{ page_user.email }}">Facebook</a>  
+	{% endif %}
+
+
+	{% if page_user.linkedin_url %}
+		| <a href="{{ page_user.linkedin_url }}">Twitter</a> 
+	{% endif %}
+
+
+	{% if page_user.instagram_url %}
+		| <a href="{{ page_user.instagram_url }}">Instagram</a>
+	{% endif %}
+
+
+	{% if page_user.pinterest_url %}
+		| <a href="{{ page_user.pinterest_url }}">Pinterest</a>
+	{% endif %}
+
+
+</p>
+
+
+<p class="card-text">
+        	{{ page_user.bio }}
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<br/><br/>
+ {% endcomment %}
+
+
+
+{% endblock %} 
